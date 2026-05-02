@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Architect Portfolio | OOO</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            /* Color System */
+            --bg-base: #09090b;
+            --bg-surface: #18181b;
+            --border-color: #27272a;
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --danger: #ef4444;
+            --success: #22c55e;
+            
+            /* Typography */
+            --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-base);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        header {
+            padding: 6rem 0 4rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section {
+            padding: 5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        section:last-child { border-bottom: none; }
+
+        /* Typography Styles */
+        h1 { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); line-height: 1.2; margin-bottom: 1rem; }
+        h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem; }
+        h2::before { content: ''; display: block; width: 4px; height: 1.2rem; background-color: var(--accent); border-radius: 2px; }
+        h3 { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; }
+        p { margin-bottom: 1.5rem; }
+
+        /* Components */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-family: var(--font-mono);
+        }
+
+        .card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .links a:hover {
+            border-bottom-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* RCA Table */
+        .rca-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .rca-table th, .rca-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .rca-table th {
+            color: var(--text-primary);
+            font-weight: 600;
+            width: 25%;
+        }
+
+        .mermaid-container {
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header / Hero Section -->
+        <header>
+            <div class="tech-stack" style="margin-bottom: 1rem;">
+                <span class="tag" style="background-color: transparent; border: none; color: var(--accent); padding: 0;">Backend Developer</span>
+            </div>
+            <h1>안정성을 설계하는 백엔드 아키텍트, OOO입니다.</h1>
+            <p style="font-size: 1.125rem; max-width: 600px;">
+                단순한 기능 구현을 넘어, 대용량 트래픽 환경에서의 데이터 무결성 보장과 지연 시간 최소화에 집중합니다. 시스템의 실패를 상정하고 이를 방어하는 로직 설계에 강점이 있습니다.
+            </p>
+            <div class="links">
+                <a href="mailto:email@example.com">Email</a>
+                <a href="https://github.com/username" target="_blank">GitHub</a>
+                <a href="#" target="_blank">Resume (PDF)</a>
+            </div>
+        </header>
+
+        <!-- Tech Stack -->
+        <section>
+            <h2>Tech Stack</h2>
+            <div class="tech-stack">
+                <span class="tag">NestJS</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">MariaDB</span>
+                <span class="tag">MySQL</span>
+                <span class="tag">Redis</span>
+                <span class="tag">AWS</span>
+                <span class="tag">PM2</span>
+                <span class="tag">Ubuntu</span>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section>
+            <h2>Architecture Insights</h2>
+
+            <!-- Project 1 -->
+            <div class="card">
+                <h3>1. 신소리아 메타버스: 재화 시스템 정합성 보장</h3>
+                <p>
+                    가상 경제 시스템의 재화 및 아이템 지급 로직을 설계했습니다. 보상 지급 시 우편함, 유저 소유권, 인벤토리 테이블이 갱신되는 과정에서 네트워크 장애 발생 시 데이터가 오염되는 것을 방지하기 위해 트랜잭션 롤백 구조를 적용했습니다.
+                </p>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                        graph TD
+                            classDef default fill:#18181b,stroke:#27272a,color:#a1a1aa;
+                            classDef fail fill:#450a0a,stroke:#ef4444,color:#f87171;
+                            classDef success fill:#052e16,stroke:#22c55e,color:#4ade80;
+
+                            Start([지급 API]) --> TX{Transaction}
+                            
+                            subgraph "Atomic Scope"
+                                TX --> T1[우편함 갱신]
+                                T1 --> T2[소유권 갱신]
+                                T2 --> T3[인벤토리 갱신]
+                            end
+
+                            T3 --> C((COMMIT)):::success
+                            
+                            T1 -.-> RB((ROLLBACK)):::fail
+                            T2 -.-> RB
+                            T3 -.-> RB
+                    </div>
+                </div>
+                <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--text-primary); margin-bottom: 0;">
+                    > Result: 데이터 불일치율 0% 유지 및 트랜잭션 안전성 확보
+                </p>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="card">
+                <h3>2. VOTMS: AI 인재평가 실시간 스트리밍 최적화</h3>
+                <p>
+                    기존 REST API 방식의 오디오 처리 파이프라인이 가진 순차적 응답 지연 한계를 극복하기 위해, 시스템 아키텍처를 WebSocket 기반의 실시간 양방향 스트리밍으로 전면 전환했습니다.
+                </p>
+                <div class="tech-stack" style="margin-bottom: 1rem;">
+                    <span class="tag">WebSocket</span>
+                    <span class="tag">Voice Orchestration</span>
+                </div>
+                <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--text-primary); margin-bottom: 0;">
+                    > Result: 오디오 수신 및 분석 지연 시간(Latency) 최소화 달성
+                </p>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="card">
+                <h3>3. 실시간 일일 랭킹 산정 최적화</h3>
+                <p>
+                    전체 누적 랭킹이 아닌, 당일 발생한 활성 데이터를 기준으로 하는 실시간 일일 랭킹 시스템을 구축했습니다. RDBMS 조회 병목을 해소하기 위해 Redis를 도입하여 읽기/쓰기 성능을 극대화했습니다.
+                </p>
+                <div class="tech-stack" style="margin-bottom: 0;">
+                    <span class="tag">Redis Sorted Set</span>
+                    <span class="tag">TTL Key Rotation</span>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="card" style="margin-bottom: 0;">
+                <h3>4. 이기종 산업 인프라 연동 (해상물류)</h3>
+                <p>
+                    외부 인터넷 접속이 제한되는 환경 및 다국적 비즈니스 파트너(이집트 등)와의 협업 프로젝트입니다. 정부과제 수준의 보안 요건과 이기종 장비 간 실시간 텔레메트리 데이터 연동을 위한 TCP/IP 통신 규격 설계 및 DB 이중화를 검토했습니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- RCA Section -->
+        <section>
+            <h2>Root Cause Analysis</h2>
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <table class="rca-table">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #1f1f22;">Incident Context</th>
+                            <th style="background-color: #1f1f22;">Analysis & Resolution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DB Connection Leak</td>
+                            <td>특정 로직 내 트랜잭션 미해제로 인한 활성 커넥션 누수 식별. Pool 반환 강제화 및 커넥션 타임아웃 튜닝을 통해 MTTR 단축.</td>
+                        </tr>
+                        <tr>
+                            <td>Update Collision</td>
+                            <td>동시 다발적 API 호출로 인한 동일 Row 데드락 발생. 쿼리 순서 정렬 및 락(Lock) 스코프의 최소화 로직 적용.</td>
+                        </tr>
+                        <tr>
+                            <td>PM2 / 배포 파이프라인</td>
+                            <td>Ubuntu 서버 환경에서 SSH 인증 및 프로세스 관리 이슈 디버깅. 무중단 서비스 유지를 위한 배포 스크립트 수정.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 OOO. Designed for high availability and performance.</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            fontFamily: 'var(--font-sans)'
+        });
+    </script>
+</body>
+</html>
