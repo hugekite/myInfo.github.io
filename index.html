@@ -18,6 +18,7 @@
             --color-err: #f85149;
             --color-warn: #d29922;
             --color-info: #58a6ff;
+            --color-purple: #bc8cff;
             --font-mono: 'Fira Code', Consolas, monospace;
             --font-sans: 'Pretendard', sans-serif;
         }
@@ -31,35 +32,41 @@
         .term-header { background: var(--bg-term); border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 40px; font-family: var(--font-mono); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .prompt { color: var(--color-ok); margin-right: 8px; }
         .cmd { color: var(--color-info); }
-        .term-body { margin-top: 16px; font-size: 0.95rem; color: var(--text-base); }
-        .term-body p { margin-bottom: 8px; }
+        .term-body { margin-top: 16px; font-size: 0.9rem; color: var(--text-base); }
+        .term-body p { margin-bottom: 6px; }
+        .json-key { color: var(--color-info); }
+        .json-str { color: var(--color-ok); }
+        .json-arr { color: var(--color-warn); }
         
         .contact-bar { margin-top: 24px; display: flex; gap: 20px; border-top: 1px dashed var(--border); padding-top: 16px; }
         .contact-bar a { color: var(--color-info); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; }
         .contact-bar a:hover { text-decoration: underline; }
 
-        h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; color: #fff; border-left: 4px solid var(--color-info); padding-left: 12px; }
+        h2 { font-size: 1.4rem; font-weight: 600; margin: 30px 0 20px 0; color: #fff; border-left: 4px solid var(--color-info); padding-left: 12px; }
 
         /* Grid Layout */
-        .grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 60px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+        .grid-1 { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
         /* Dashboard Cards */
         .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; }
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .card-title { font-size: 1.1rem; font-weight: 600; color: #fff; }
-        .badge { background: #1f2428; border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
-        .card-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px; }
+        .badge { background: #1f2428; border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+        .card-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; min-height: 44px; }
 
         /* Console Widget Area */
         .widget { background: var(--bg-term); border: 1px solid var(--border); border-radius: 4px; padding: 16px; font-family: var(--font-mono); font-size: 0.85rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .widget-controls { margin-bottom: 16px; display: flex; gap: 10px; }
-        button { background: #21262d; border: 1px solid var(--border); color: var(--text-base); padding: 6px 12px; border-radius: 4px; font-family: var(--font-sans); font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+        .widget-controls { margin-bottom: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+        button { background: #21262d; border: 1px solid var(--border); color: var(--text-base); padding: 6px 12px; border-radius: 4px; font-family: var(--font-sans); font-size: 0.8rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
         button:hover { background: #30363d; border-color: #8b949e; }
         button[data-type="err"]:hover { border-color: var(--color-err); color: var(--color-err); }
         button[data-type="ok"]:hover { border-color: var(--color-ok); color: var(--color-ok); }
+        button[data-type="warn"]:hover { border-color: var(--color-warn); color: var(--color-warn); }
 
         /* Log Outputs */
-        .log-screen { flex-grow: 1; background: #010409; border: 1px solid var(--border); padding: 12px; border-radius: 4px; overflow-y: auto; height: 180px; display: flex; flex-direction: column; gap: 6px; }
+        .log-screen { flex-grow: 1; background: #010409; border: 1px solid var(--border); padding: 12px; border-radius: 4px; overflow-y: auto; height: 160px; display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; }
         .log-line { opacity: 0; animation: logEntry 0.1s forwards; }
         @keyframes logEntry { to { opacity: 1; } }
         .log-time { color: var(--text-muted); margin-right: 8px; }
@@ -68,15 +75,32 @@
         .l-info { color: var(--color-info); }
         .l-warn { color: var(--color-warn); }
 
-        /* Redis Bar Chart */
-        .stat-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-        .bar-wrap { width: 100%; background: #010409; border: 1px solid var(--border); height: 12px; border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
+        /* Visual Bars */
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem; }
+        .bar-wrap { width: 100%; background: #010409; border: 1px solid var(--border); height: 8px; border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
         .bar { height: 100%; width: 0%; transition: width 0.1s linear; }
 
+        /* Network Visualizer */
+        .net-track { display: flex; align-items: center; justify-content: space-between; background: #010409; border: 1px solid var(--border); padding: 8px 16px; margin-bottom: 8px; border-radius: 4px; position: relative; overflow: hidden; height: 40px; }
+        .net-node { font-weight: bold; color: var(--text-muted); z-index: 2; }
+        .packet { position: absolute; width: 6px; height: 6px; border-radius: 50%; top: 50%; transform: translateY(-50%); opacity: 0; }
+        .packet.rest { background: var(--color-err); box-shadow: 0 0 8px var(--color-err); }
+        .packet.ws { background: var(--color-ok); box-shadow: 0 0 8px var(--color-ok); }
+
         /* PM2 Monitor */
-        .pm2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; height: 100%; }
-        .pm2-box { border: 1px solid var(--border); background: #010409; padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .pm2-val { font-size: 1.5rem; font-weight: 500; margin: 8px 0; }
+        .pm2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; height: 100%; align-items: center; }
+        .pm2-box { border: 1px solid var(--border); background: #010409; padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 4px; }
+        .pm2-val { font-size: 1.4rem; font-weight: 500; margin: 4px 0; }
+
+        /* Project Details */
+        .proj-list { display: flex; flex-direction: column; gap: 16px; }
+        .proj-item { background: var(--bg-term); border: 1px solid var(--border); padding: 20px; border-radius: 6px; }
+        .proj-header { display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+        .proj-name { font-weight: 600; color: #fff; font-size: 1.1rem; }
+        .proj-role { color: var(--color-purple); font-family: var(--font-mono); font-size: 0.85rem; }
+        .proj-body ul { list-style: none; margin-left: 0; }
+        .proj-body li { position: relative; padding-left: 16px; margin-bottom: 8px; font-size: 0.95rem; color: var(--text-base); }
+        .proj-body li::before { content: '>'; position: absolute; left: 0; color: var(--color-info); font-family: var(--font-mono); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -87,78 +111,104 @@
             <div><span class="prompt">tyk@macbook-pro:~$</span><span class="cmd">cat profile.json</span></div>
             <div class="term-body">
                 <p>{</p>
-                <p>&nbsp;&nbsp;"name": "김태연",</p>
-                <p>&nbsp;&nbsp;"role": "Backend Engineer",</p>
-                <p>&nbsp;&nbsp;"focus": ["Data Integrity", "Low Latency", "Fault Tolerance"],</p>
-                <p>&nbsp;&nbsp;"summary": "메타버스 및 디지털트윈 플랫폼의 백엔드 아키텍처 설계 및 인프라 운영. 운영 환경의 실패를 상정하고 방어하는 로직 설계에 강점이 있습니다."</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"name"</span>: <span class="json-str">"김태연"</span>,</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"role"</span>: <span class="json-str">"Backend Engineer"</span>,</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"career"</span>: <span class="json-str">"Rockwon IT Global (2024.09 ~ Present)"</span>,</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"skills"</span>: <span class="json-arr">[</span><span class="json-str">"Node.js"</span>, <span class="json-str">"NestJS"</span>, <span class="json-str">"TypeScript"</span>, <span class="json-str">"MariaDB"</span>, <span class="json-str">"Redis"</span>, <span class="json-str">"AWS"</span><span class="json-arr">]</span>,</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"focus"</span>: <span class="json-arr">[</span><span class="json-str">"Data Integrity"</span>, <span class="json-str">"Low Latency"</span>, <span class="json-str">"Fault Tolerance"</span><span class="json-arr">]</span>,</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"summary"</span>: <span class="json-str">"단순한 기능 구현을 넘어, 운영 환경의 실패를 상정하고 이를 방어하는 아키텍처 설계에 강점이 있습니다. 메타버스 재화 처리, 실시간 스트리밍 파이프라인, 폐쇄망 인프라 구축을 주도했습니다."</span></p>
                 <p>}</p>
                 <div class="contact-bar">
-                    <a href="mailto:email@example.com">email@example.com</a>
+                    <a href="mailto:ktyeon92@gmail.com">ktyeon92@gmail.com</a>
                     <a href="https://github.com/hugekite" target="_blank">github.com/hugekite</a>
                 </div>
             </div>
         </div>
 
-        <h2>System Architecture Metrics</h2>
+        <h2>Interactive System Metrics</h2>
         
-        <div class="grid">
+        <div class="grid-2">
             <!-- Widget 1: Transaction -->
             <div class="card">
                 <div class="card-header">
-                    <span class="card-title">Transaction Integrity (메타버스 재화 처리)</span>
-                    <span class="badge">TypeORM / MariaDB</span>
+                    <span class="card-title">Transaction Integrity</span>
+                    <span class="badge">TypeORM / RDBMS</span>
                 </div>
-                <div class="card-desc">아이템 지급 시 발생하는 다중 테이블(우편함, 소유권, 인벤토리) 갱신 및 롤백 프로세스 시뮬레이션</div>
+                <div class="card-desc">아이템 지급 시 다중 테이블(우편함, 소유권, 인벤토리) 갱신 중 네트워크 단절 발생 시 데이터 오염을 막는 롤백 프로세스</div>
                 
                 <div class="widget">
                     <div class="widget-controls">
-                        <button data-type="ok" onclick="runTx(true)">Execute: Success</button>
-                        <button data-type="err" onclick="runTx(false)">Execute: Network Drop</button>
+                        <button data-type="ok" onclick="runTx(true)">Exec: Success</button>
+                        <button data-type="err" onclick="runTx(false)">Exec: Network Drop</button>
                     </div>
                     <div class="log-screen" id="log-tx">
-                        <div class="log-line"><span class="log-time">[System]</span> Ready for transaction.</div>
+                        <div class="log-line"><span class="log-time">[System]</span> Ready for atomic transaction.</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Widget 2: Redis Ranking -->
+            <!-- Widget 2: WebSocket Streaming -->
             <div class="card">
                 <div class="card-header">
-                    <span class="card-title">Real-time Ranking Performance</span>
-                    <span class="badge">Redis / Node.js</span>
+                    <span class="card-title">Real-time Pipeline</span>
+                    <span class="badge">WebSocket / VAD</span>
                 </div>
-                <div class="card-desc">1만 건의 동시다발적 점수 등록 시 RDBMS(병목)와 Redis Sorted Set(인메모리)의 레이턴시 비교</div>
+                <div class="card-desc">VOTMS 오디오 처리 시 기존 REST API(순차) 대비 WebSocket(병렬 스트리밍) 도입으로 인한 레이턴시 85% 단축 검증</div>
                 
                 <div class="widget">
                     <div class="widget-controls">
-                        <button data-type="ok" onclick="runBench()">Run Benchmark (10k req)</button>
+                        <button data-type="ok" onclick="runStream()">Simulate Payload</button>
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <div style="font-size: 0.75rem; color: var(--color-err); margin-bottom: 2px;">REST API (Sequential) - <span id="rest-time">0ms</span></div>
+                        <div class="net-track" id="track-rest">
+                            <span class="net-node">Client</span><span class="net-node">Server</span>
+                        </div>
+                        <div style="font-size: 0.75rem; color: var(--color-ok); margin-bottom: 2px;">WebSocket (Streaming) - <span id="ws-time">0ms</span></div>
+                        <div class="net-track" id="track-ws">
+                            <span class="net-node">Client</span><span class="net-node">Server</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <!-- Widget 3: Redis Ranking -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">In-Memory Performance</span>
+                    <span class="badge">Redis Sorted Set</span>
+                </div>
+                <div class="card-desc">일일 랭킹 처리 시 RDBMS Index Scan(I/O 병목)과 Redis Sorted Set O(log(N)) 의 동시성 처리 속도 비교</div>
+                
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="warn" onclick="runBench()">Run Benchmark (10k)</button>
                     </div>
                     <div style="margin-top: 10px;">
                         <div class="stat-row">
-                            <span class="l-warn">Legacy RDBMS (Index Scan)</span>
+                            <span class="l-err">Legacy RDBMS</span>
                             <span id="rdb-time">0ms</span>
                         </div>
-                        <div class="bar-wrap"><div class="bar" id="rdb-bar" style="background: var(--color-warn);"></div></div>
+                        <div class="bar-wrap"><div class="bar" id="rdb-bar" style="background: var(--color-err);"></div></div>
                         
                         <div class="stat-row">
-                            <span class="l-info">Redis Sorted Set (ZADD)</span>
+                            <span class="l-info">Redis (ZADD)</span>
                             <span id="redis-time">0ms</span>
                         </div>
                         <div class="bar-wrap"><div class="bar" id="redis-bar" style="background: var(--color-info);"></div></div>
                     </div>
-                    <div class="log-screen" id="log-bench" style="height: 60px; margin-top: 10px;">
-                        <div class="log-line"><span class="log-time">[Bench]</span> Awaiting load generation...</div>
-                    </div>
                 </div>
             </div>
 
-            <!-- Widget 3: PM2 Auto Healing -->
+            <!-- Widget 4: PM2 Auto Healing -->
             <div class="card">
                 <div class="card-header">
                     <span class="card-title">Infra Auto-Healing</span>
-                    <span class="badge">PM2 / Ubuntu EC2</span>
+                    <span class="badge">PM2 / Ubuntu</span>
                 </div>
-                <div class="card-desc">운영 중 메모리 누수 한계치 도달 시 PM2 데몬의 프로세스 재시작 및 무중단 복구 검증</div>
+                <div class="card-desc">AWS EC2 운영 중 로직 결함으로 메모리 누수 도달 시 PM2 데몬에 의한 무중단 서비스 자동 복구 시뮬레이션</div>
                 
                 <div class="widget">
                     <div class="widget-controls">
@@ -166,12 +216,12 @@
                     </div>
                     <div class="pm2-grid">
                         <div class="pm2-box">
-                            <div style="color: var(--text-muted);">MEM Usage</div>
+                            <div style="color: var(--text-muted); font-size:0.8rem;">MEM Usage</div>
                             <div class="pm2-val" id="pm2-mem" style="color: var(--color-ok);">42 MB</div>
                             <div class="bar-wrap" style="height: 4px; margin: 0; background: #161b22;"><div class="bar" id="pm2-mbar" style="background: var(--color-ok); width: 15%;"></div></div>
                         </div>
                         <div class="pm2-box">
-                            <div style="color: var(--text-muted);">Status</div>
+                            <div style="color: var(--text-muted); font-size:0.8rem;">Process Status</div>
                             <div class="pm2-val" id="pm2-stat" style="color: var(--color-ok);">online</div>
                             <div style="font-size: 0.75rem; color: var(--text-muted);" id="pm2-pid">PID: 14032</div>
                         </div>
@@ -180,22 +230,53 @@
             </div>
         </div>
 
-        <h2>Technical Implementations</h2>
-        <div class="term-header" style="padding: 0; box-shadow: none;">
-            <table style="width: 100%; border-collapse: collapse; text-align: left; font-family: var(--font-sans); font-size: 0.95rem;">
-                <tr style="border-bottom: 1px solid var(--border);">
-                    <th style="padding: 16px; color: var(--color-info); width: 25%;">VOTMS Streaming</th>
-                    <td style="padding: 16px; color: var(--text-muted);">REST API의 순차적 AI 오디오 처리 병목을 WebSocket + Smart VAD 기반 양방향 파이프라인으로 전환하여 지연시간 85% 단축.</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                    <th style="padding: 16px; color: var(--color-info);">Legacy Refactoring</th>
-                    <td style="padding: 16px; color: var(--text-muted);">기존 Node.js 서비스 로직을 NestJS의 Controller-Service-DTO 계층으로 분리하여 객체지향적 구조로 무중단 마이그레이션.</td>
-                </tr>
-                <tr>
-                    <th style="padding: 16px; color: var(--color-info);">IoT / Closed Network</th>
-                    <td style="padding: 16px; color: var(--text-muted);">정부과제 해양물류/디지털트윈 환경에서 폐쇄망 제약 조건을 극복하고, 이기종 로봇 제어를 위한 TCP/IP 통신 구조 설계 및 DB 이중화 검토.</td>
-                </tr>
-            </table>
+        <h2>Core Project Experience</h2>
+        <div class="grid-1">
+            <div class="proj-list">
+                
+                <div class="proj-item">
+                    <div class="proj-header">
+                        <span class="proj-name">메타버스 플랫폼 (신소리아) 백엔드 개발</span>
+                        <span class="proj-role">Backend / Architecture</span>
+                    </div>
+                    <div class="proj-body">
+                        <ul>
+                            <li><strong>재화 및 인벤토리 시스템 설계:</strong> parcel, user_item, inventory 로 이어지는 데이터 흐름 구축 및 ト랜잭션 롤백 구조 적용으로 데이터 정합성 보장.</li>
+                            <li><strong>확률형 보상 및 이벤트:</strong> 다중 조건(성별, 상태)에 따른 서버 사이드 확률 분기 처리 및 가챠 시스템 구현.</li>
+                            <li><strong>실시간 일일 랭킹 시스템:</strong> 기존 RDBMS 병목을 피해 Redis를 활용한 실시간 랭킹 구조 설계 및 스케줄러를 통한 주기적 데이터 갱신 로직 구현.</li>
+                            <li><strong>구조 리팩토링:</strong> 기존 Node.js 레거시 코드를 중단 없이 NestJS 환경(Controller, Service, DTO)으로 점진적 리팩토링하여 유지보수성 향상.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proj-item">
+                    <div class="proj-header">
+                        <span class="proj-name">AI 인재평가 플랫폼 (VOTMS) 고도화</span>
+                        <span class="proj-role">Data Pipeline / Optimization</span>
+                    </div>
+                    <div class="proj-body">
+                        <ul>
+                            <li><strong>실시간 아키텍처 전환:</strong> 기존 순차적(REST API) 오디오 처리의 지연 문제를 식별하고, WebSocket과 Smart VAD를 결합한 실시간 스트리밍 구조로 마이그레이션.</li>
+                            <li><strong>저지연(Low-Latency) 파이프라인:</strong> 오디오 수신부터 AI 분석, 결과 반환까지의 지연 시간을 최소화하여 클라이언트(Unreal 3D)의 실시간 평가 요구사항 완벽 충족.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proj-item">
+                    <div class="proj-header">
+                        <span class="proj-name">정부과제 기반 제조/해양 디지털트윈 연계</span>
+                        <span class="proj-role">IoT / Infrastructure</span>
+                    </div>
+                    <div class="proj-body">
+                        <ul>
+                            <li><strong>이기종 장비 통신 설계:</strong> C# 통합 제어 프로그램과 현대자동차 제조 로봇 간의 TCP/IP 기반 데이터 매핑 및 통신 프로토콜 검토/구현.</li>
+                            <li><strong>폐쇄망 환경 인프라 구축:</strong> 외부 인터넷이 차단된 정부과제 특성을 반영하여 배포 구조 및 데이터 반출입 제약을 고려한 서버 아키텍처 설계.</li>
+                            <li><strong>시스템 운영 요구사항 도출:</strong> 울산 해양물류 프로젝트 수행 시 단순 개발을 넘어 서버 사양, 이중화, 인프라 조건까지 종합적으로 분석하여 대응.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -222,68 +303,102 @@
             const logId = 'log-tx';
             document.getElementById(logId).innerHTML = '';
             
-            appendLog(logId, 'INFO', 'QueryRunner initialized. Transaction started.');
+            appendLog(logId, 'INFO', 'QueryRunner init. Tx started.');
+            await sleep(300);
+            appendLog(logId, 'OK', 'UPDATE mailbox (status="received")');
             await sleep(400);
-            appendLog(logId, 'OK', 'UPDATE mailbox SET status = "received"');
-            await sleep(500);
 
             if(isSuccess) {
-                appendLog(logId, 'OK', 'INSERT INTO ownership (user_id, item_id)');
-                await sleep(500);
-                appendLog(logId, 'OK', 'UPDATE inventory SET count = count + 1');
-                await sleep(300);
-                appendLog(logId, 'OK', 'COMMIT executing...');
-                appendLog(logId, 'INFO', 'Transaction successful. Connection released.');
-            } else {
-                appendLog(logId, 'WARN', 'INSERT INTO ownership (user_id, item_id) - Processing...');
-                await sleep(800);
-                appendLog(logId, 'ERR', 'ER_LOCK_DEADLOCK: Deadlock found when trying to get lock');
-                await sleep(300);
-                appendLog(logId, 'WARN', 'ROLLBACK initiated...');
+                appendLog(logId, 'OK', 'INSERT ownership (user, item)');
                 await sleep(400);
-                appendLog(logId, 'INFO', 'Data states reverted. Connection released.');
+                appendLog(logId, 'OK', 'UPDATE inventory (count++)');
+                await sleep(200);
+                appendLog(logId, 'OK', 'COMMIT execution complete.');
+                appendLog(logId, 'INFO', 'Integrity verified.');
+            } else {
+                appendLog(logId, 'WARN', 'INSERT ownership - Pending...');
+                await sleep(600);
+                appendLog(logId, 'ERR', 'ER_LOCK_DEADLOCK detected.');
+                await sleep(300);
+                appendLog(logId, 'WARN', 'ROLLBACK cascading...');
+                await sleep(300);
+                appendLog(logId, 'INFO', 'Data reverted safely.');
             }
         }
 
-        // 2. Benchmark Logic
+        // 2. WebSocket Stream Logic
+        async function runStream() {
+            const trRest = document.getElementById('track-rest');
+            const trWs = document.getElementById('track-ws');
+            const tRest = document.getElementById('rest-time');
+            const tWs = document.getElementById('ws-time');
+
+            // clear old packets
+            trRest.querySelectorAll('.packet').forEach(e => e.remove());
+            trWs.querySelectorAll('.packet').forEach(e => e.remove());
+            tRest.innerText = "Processing..."; tWs.innerText = "Streaming...";
+
+            // REST Animation (Slow chunk)
+            const pRest = document.createElement('div');
+            pRest.className = 'packet rest';
+            pRest.style.width = '20px'; pRest.style.height = '20px';
+            trRest.appendChild(pRest);
+            
+            pRest.animate([{ left: '40px', opacity: 1 }, { left: 'calc(100% - 60px)', opacity: 1 }], { duration: 3500, fill: 'forwards', easing: 'ease-in-out' });
+            
+            setTimeout(() => { tRest.innerText = '8.5s (High Latency)'; tRest.style.color = 'var(--color-err)'; }, 3500);
+
+            // WebSocket Animation (Fast chunks)
+            let wsTime = 0;
+            const wsIntv = setInterval(() => {
+                wsTime += 0.2;
+                tWs.innerText = `${wsTime.toFixed(1)}s`;
+                if(wsTime >= 1.2) { clearInterval(wsIntv); tWs.innerText = '1.2s (Optimized)'; tWs.style.color = 'var(--color-ok)'; }
+            }, 200);
+
+            for(let i=0; i<15; i++) {
+                setTimeout(() => {
+                    const pWs = document.createElement('div');
+                    pWs.className = 'packet ws';
+                    trWs.appendChild(pWs);
+                    pWs.animate([{ left: '40px', opacity: 1 }, { left: 'calc(100% - 60px)', opacity: 0 }], { duration: 600, fill: 'forwards' });
+                }, i * 80);
+            }
+        }
+
+        // 3. Benchmark Logic
         async function runBench() {
-            const logId = 'log-bench';
             const rdbBar = document.getElementById('rdb-bar');
             const redisBar = document.getElementById('redis-bar');
             const rTime = document.getElementById('rdb-time');
             const dTime = document.getElementById('redis-time');
 
-            document.getElementById(logId).innerHTML = '';
             rdbBar.style.transition = 'none'; rdbBar.style.width = '0%';
             redisBar.style.transition = 'none'; redisBar.style.width = '0%';
-            
-            appendLog(logId, 'INFO', 'Generating 10,000 requests...');
             
             // Redis (Fast)
             setTimeout(() => {
                 redisBar.style.transition = 'width 0.1s ease-out';
                 redisBar.style.width = '100%';
                 dTime.innerText = '12ms';
-                appendLog(logId, 'OK', 'Redis ZADD completed in 12ms');
             }, 100);
 
             // RDBMS (Slow)
-            rdbBar.style.transition = 'width 4s cubic-bezier(0.1, 0.7, 1.0, 0.1)';
+            rdbBar.style.transition = 'width 3s cubic-bezier(0.1, 0.7, 1.0, 0.1)';
             rdbBar.style.width = '100%';
             
             let time = 0;
             const intv = setInterval(() => {
                 time += Math.floor(Math.random() * 150) + 50;
-                rTime.innerText = `${time}ms (DB Lock Wait)`;
+                rTime.innerText = `${time}ms (Lock)`;
             }, 100);
 
-            await sleep(4000);
+            await sleep(3000);
             clearInterval(intv);
-            rTime.innerText = '4102ms';
-            appendLog(logId, 'WARN', 'RDBMS Thread pool exhausted. Finished in 4102ms');
+            rTime.innerText = '4102ms (Bottleneck)';
         }
 
-        // 3. PM2 Logic
+        // 4. PM2 Logic
         async function runLeak() {
             const mem = document.getElementById('pm2-mem');
             const mBar = document.getElementById('pm2-mbar');
@@ -294,7 +409,7 @@
             mem.style.color = 'var(--color-warn)';
             mBar.style.background = 'var(--color-warn)';
             
-            for(let i=15; i<=95; i+=10) {
+            for(let i=15; i<=95; i+=15) {
                 mBar.style.width = `${i}%`;
                 mem.innerText = `${Math.floor(i * 2.5)} MB`;
                 await sleep(300);
@@ -303,7 +418,7 @@
             mBar.style.background = 'var(--color-err)';
             mem.style.color = 'var(--color-err)';
             stat.innerText = 'errored'; stat.style.color = 'var(--color-err)';
-            await sleep(1000);
+            await sleep(800);
 
             // Restart
             pid.innerText = `PID: ${Math.floor(Math.random() * 10000) + 10000}`;
