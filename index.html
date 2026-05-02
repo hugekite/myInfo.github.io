@@ -3,327 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backend Architect | 김태연</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-    <!-- Mermaid.js -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <title>Taeyeon Kim | Backend Engineer</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-base: #050505;
-            --bg-card: #0f0f0f;
-            --border-color: #222;
-            --text-main: #eaeaea;
-            --text-muted: #888;
-            --accent-gold: #c5a059;
-            --accent-glow: rgba(197, 160, 89, 0.1);
-            --font-serif: 'Playfair Display', serif;
+            --bg-os: #0d1117;
+            --bg-term: #161b22;
+            --bg-card: #0d1117;
+            --border: #30363d;
+            --text-base: #c9d1d9;
+            --text-muted: #8b949e;
+            --color-ok: #3fb950;
+            --color-err: #f85149;
+            --color-warn: #d29922;
+            --color-info: #58a6ff;
+            --font-mono: 'Fira Code', Consolas, monospace;
             --font-sans: 'Pretendard', sans-serif;
-            --font-mono: Consolas, Monaco, monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Layout & Animations */
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
-        .delay-1 { animation-delay: 0.2s; opacity: 0; }
-        .delay-2 { animation-delay: 0.4s; opacity: 0; }
-
-        /* Header */
-        header {
-            padding: 8rem 0 5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .title-group { margin-bottom: 2rem; }
-        .title-group span { color: var(--accent-gold); font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
-        h1 { font-family: var(--font-serif); font-size: 3.5rem; font-weight: 600; color: #fff; line-height: 1.2; margin-top: 1rem; }
+        body { font-family: var(--font-sans); background-color: var(--bg-os); color: var(--text-base); line-height: 1.6; }
         
-        .summary { font-size: 1.15rem; color: var(--text-muted); max-width: 700px; margin-bottom: 3rem; }
-        .summary strong { color: var(--text-main); font-weight: 500; }
+        .layout { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
 
-        .links a {
-            color: var(--accent-gold);
-            text-decoration: none;
-            font-family: var(--font-mono);
-            font-size: 0.95rem;
-            margin-right: 2rem;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s;
-        }
-        .links a:hover { border-bottom-color: var(--accent-gold); }
-
-        /* Sections */
-        section { padding: 6rem 0; border-bottom: 1px solid var(--border-color); }
-        section:last-child { border-bottom: none; }
-
-        h2 { font-family: var(--font-serif); font-size: 2rem; color: #fff; margin-bottom: 3rem; font-style: italic; }
-
-        /* Tech Tags */
-        .tech-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-        .tag {
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 0.4rem 1.2rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-family: var(--font-mono);
-            transition: all 0.3s ease;
-        }
-        .tag:hover { border-color: var(--accent-gold); color: var(--accent-gold); background-color: var(--accent-glow); }
-
-        /* Project Cards */
-        .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-color: #333;
-        }
+        /* Terminal Header */
+        .term-header { background: var(--bg-term); border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 40px; font-family: var(--font-mono); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .prompt { color: var(--color-ok); margin-right: 8px; }
+        .cmd { color: var(--color-info); }
+        .term-body { margin-top: 16px; font-size: 0.95rem; color: var(--text-base); }
+        .term-body p { margin-bottom: 8px; }
         
-        .card h3 { font-size: 1.3rem; color: #fff; margin-bottom: 1rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .card h3::before { content: ''; width: 6px; height: 6px; background-color: var(--accent-gold); display: inline-block; }
-        .card > p { color: var(--text-muted); margin-bottom: 2rem; }
+        .contact-bar { margin-top: 24px; display: flex; gap: 20px; border-top: 1px dashed var(--border); padding-top: 16px; }
+        .contact-bar a { color: var(--color-info); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; }
+        .contact-bar a:hover { text-decoration: underline; }
 
-        .result-box {
-            background-color: #0a0a0a;
-            border-left: 2px solid var(--accent-gold);
-            padding: 1rem 1.5rem;
-            margin-top: 2rem;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
+        h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; color: #fff; border-left: 4px solid var(--color-info); padding-left: 12px; }
 
-        /* Mermaid Visual Container */
-        .visual-container {
-            background-color: #050505;
-            border: 1px solid var(--border-color);
-            padding: 2rem;
-            margin: 2rem 0;
-            display: flex;
-            justify-content: center;
-            overflow-x: auto;
-        }
+        /* Grid Layout */
+        .grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 60px; }
 
-        /* Table */
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { padding: 1.5rem 1rem; border-bottom: 1px solid var(--border-color); text-align: left; }
-        th { color: var(--accent-gold); font-weight: 500; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; width: 30%; }
-        td { color: var(--text-muted); font-size: 0.95rem; }
-        tr:hover td { background-color: #0a0a0a; color: var(--text-main); }
+        /* Dashboard Cards */
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .card-title { font-size: 1.1rem; font-weight: 600; color: #fff; }
+        .badge { background: #1f2428; border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+        .card-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px; }
 
-        footer { padding: 4rem 0; text-align: center; color: #555; font-family: var(--font-mono); font-size: 0.8rem; }
+        /* Console Widget Area */
+        .widget { background: var(--bg-term); border: 1px solid var(--border); border-radius: 4px; padding: 16px; font-family: var(--font-mono); font-size: 0.85rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .widget-controls { margin-bottom: 16px; display: flex; gap: 10px; }
+        button { background: #21262d; border: 1px solid var(--border); color: var(--text-base); padding: 6px 12px; border-radius: 4px; font-family: var(--font-sans); font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #30363d; border-color: #8b949e; }
+        button[data-type="err"]:hover { border-color: var(--color-err); color: var(--color-err); }
+        button[data-type="ok"]:hover { border-color: var(--color-ok); color: var(--color-ok); }
+
+        /* Log Outputs */
+        .log-screen { flex-grow: 1; background: #010409; border: 1px solid var(--border); padding: 12px; border-radius: 4px; overflow-y: auto; height: 180px; display: flex; flex-direction: column; gap: 6px; }
+        .log-line { opacity: 0; animation: logEntry 0.1s forwards; }
+        @keyframes logEntry { to { opacity: 1; } }
+        .log-time { color: var(--text-muted); margin-right: 8px; }
+        .l-ok { color: var(--color-ok); }
+        .l-err { color: var(--color-err); }
+        .l-info { color: var(--color-info); }
+        .l-warn { color: var(--color-warn); }
+
+        /* Redis Bar Chart */
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .bar-wrap { width: 100%; background: #010409; border: 1px solid var(--border); height: 12px; border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
+        .bar { height: 100%; width: 0%; transition: width 0.1s linear; }
+
+        /* PM2 Monitor */
+        .pm2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; height: 100%; }
+        .pm2-box { border: 1px solid var(--border); background: #010409; padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .pm2-val { font-size: 1.5rem; font-weight: 500; margin: 8px 0; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Header -->
-        <header class="fade-in">
-            <div class="title-group">
-                <span>System Architect & Backend Engineer</span>
-                <h1>안정성을 설계하는<br>백엔드 개발자, 김태연입니다.</h1>
+    <div class="layout">
+        <!-- Terminal Intro -->
+        <div class="term-header">
+            <div><span class="prompt">tyk@macbook-pro:~$</span><span class="cmd">cat profile.json</span></div>
+            <div class="term-body">
+                <p>{</p>
+                <p>&nbsp;&nbsp;"name": "김태연",</p>
+                <p>&nbsp;&nbsp;"role": "Backend Engineer",</p>
+                <p>&nbsp;&nbsp;"focus": ["Data Integrity", "Low Latency", "Fault Tolerance"],</p>
+                <p>&nbsp;&nbsp;"summary": "메타버스 및 디지털트윈 플랫폼의 백엔드 아키텍처 설계 및 인프라 운영. 운영 환경의 실패를 상정하고 방어하는 로직 설계에 강점이 있습니다."</p>
+                <p>}</p>
+                <div class="contact-bar">
+                    <a href="mailto:email@example.com">email@example.com</a>
+                    <a href="https://github.com/hugekite" target="_blank">github.com/hugekite</a>
+                </div>
             </div>
-            <p class="summary">
-                단순한 기능 구현을 넘어, 대용량 트래픽 환경에서의 <strong>데이터 무결성 보장</strong>과 <strong>지연 시간 최소화</strong>에 집중합니다. 시스템의 실패를 상정하고 이를 방어하는 아키텍처 설계에 강점이 있습니다.
-            </p>
-            <div class="links">
-                <a href="mailto:email@example.com">Contact via Email</a>
-                <a href="https://github.com/hugekite" target="_blank">GitHub Profile</a>
-            </div>
-        </header>
+        </div>
 
-        <!-- Tech Stack -->
-        <section class="fade-in delay-1">
-            <h2>Engineering Stack</h2>
-            <div class="tech-grid">
-                <span class="tag">NestJS</span>
-                <span class="tag">TypeScript</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">Redis</span>
-                <span class="tag">MariaDB / MySQL</span>
-                <span class="tag">TypeORM</span>
-                <span class="tag">AWS EC2</span>
-                <span class="tag">Ubuntu / PM2</span>
-            </div>
-        </section>
-
-        <!-- Projects -->
-        <section class="fade-in delay-2">
-            <h2>Architecture Insights</h2>
-
-            <!-- Project 1 -->
+        <h2>System Architecture Metrics</h2>
+        
+        <div class="grid">
+            <!-- Widget 1: Transaction -->
             <div class="card">
-                <h3>메타버스 플랫폼: 재화 시스템 정합성 보장</h3>
-                <p>가상 경제 시스템의 재화 및 아이템 지급 로직을 구축했습니다. 다중 테이블(우편함, 소유권, 인벤토리) 갱신 중 발생할 수 있는 네트워크 단절 시 데이터 오염을 완벽히 차단합니다.</p>
+                <div class="card-header">
+                    <span class="card-title">Transaction Integrity (메타버스 재화 처리)</span>
+                    <span class="badge">TypeORM / MariaDB</span>
+                </div>
+                <div class="card-desc">아이템 지급 시 발생하는 다중 테이블(우편함, 소유권, 인벤토리) 갱신 및 롤백 프로세스 시뮬레이션</div>
                 
-                <div class="visual-container">
-                    <div class="mermaid">
-                        graph TD
-                            %% Custom styling for premium look
-                            classDef default fill:#0f0f0f,stroke:#333,color:#eaeaea,stroke-width:1px;
-                            classDef fail fill:#1a0505,stroke:#ff4444,color:#ff4444;
-                            classDef success fill:#051a0b,stroke:#c5a059,color:#c5a059;
-
-                            Start([지급 API 호출]) --> TX{Transaction 시작}
-                            
-                            subgraph Atomic Scope [원자적 처리 구간]
-                                TX --> T1[1. 우편함 갱신]
-                                T1 --> T2[2. 소유권 갱신]
-                                T2 --> T3[3. 인벤토리 갱신]
-                            end
-
-                            T3 --> C((COMMIT)):::success
-                            T1 -.-> RB((ROLLBACK)):::fail
-                            T2 -.-> RB
-                            T3 -.-> RB
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="ok" onclick="runTx(true)">Execute: Success</button>
+                        <button data-type="err" onclick="runTx(false)">Execute: Network Drop</button>
+                    </div>
+                    <div class="log-screen" id="log-tx">
+                        <div class="log-line"><span class="log-time">[System]</span> Ready for transaction.</div>
                     </div>
                 </div>
-                <div class="result-box">
-                    [System Log] Result: 데이터 불일치율 0% 유지 및 트랜잭션 무결성 확보.
-                </div>
             </div>
 
-            <!-- Project 2 -->
+            <!-- Widget 2: Redis Ranking -->
             <div class="card">
-                <h3>VOTMS: AI 인재평가 실시간 스트리밍 아키텍처</h3>
-                <p>단방향 REST API의 오디오 처리 병목을 해결하기 위해, WebSocket과 VAD 기반의 양방향 스트리밍 파이프라인으로 시스템을 전면 마이그레이션했습니다.</p>
+                <div class="card-header">
+                    <span class="card-title">Real-time Ranking Performance</span>
+                    <span class="badge">Redis / Node.js</span>
+                </div>
+                <div class="card-desc">1만 건의 동시다발적 점수 등록 시 RDBMS(병목)와 Redis Sorted Set(인메모리)의 레이턴시 비교</div>
                 
-                <div class="visual-container">
-                    <div class="mermaid">
-                        sequenceDiagram
-                            autonumber
-                            participant C as Client
-                            participant S as WebSocket Server
-                            participant AI as AI Engine
-
-                            rect rgb(20, 20, 20)
-                            Note over C, AI: 양방향 병렬 스트리밍 처리 (Low Latency)
-                            C->>S: Audio Chunk 전송 (발화 중 지속)
-                            S->>AI: Chunk 실시간 파이프라이닝
-                            AI-->>S: 분석 결과 즉시 반환
-                            S-->>C: 결과 스트리밍 (화면 즉각 렌더링)
-                            end
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="ok" onclick="runBench()">Run Benchmark (10k req)</button>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <div class="stat-row">
+                            <span class="l-warn">Legacy RDBMS (Index Scan)</span>
+                            <span id="rdb-time">0ms</span>
+                        </div>
+                        <div class="bar-wrap"><div class="bar" id="rdb-bar" style="background: var(--color-warn);"></div></div>
+                        
+                        <div class="stat-row">
+                            <span class="l-info">Redis Sorted Set (ZADD)</span>
+                            <span id="redis-time">0ms</span>
+                        </div>
+                        <div class="bar-wrap"><div class="bar" id="redis-bar" style="background: var(--color-info);"></div></div>
+                    </div>
+                    <div class="log-screen" id="log-bench" style="height: 60px; margin-top: 10px;">
+                        <div class="log-line"><span class="log-time">[Bench]</span> Awaiting load generation...</div>
                     </div>
                 </div>
-                <div class="result-box">
-                    [System Log] Result: 오디오 수신 및 분석 전체 지연 시간(Latency) 85% 단축.
-                </div>
             </div>
 
-            <!-- Project 3 -->
+            <!-- Widget 3: PM2 Auto Healing -->
             <div class="card">
-                <h3>실시간 당일 랭킹 시스템 최적화</h3>
-                <p>전체 누적 데이터가 아닌, '당일 발생한 활성 데이터'만을 다루는 실시간 일일 랭킹 산정 로직입니다. RDBMS의 I/O 병목을 해소하기 위해 Redis 인메모리 아키텍처를 설계했습니다.</p>
+                <div class="card-header">
+                    <span class="card-title">Infra Auto-Healing</span>
+                    <span class="badge">PM2 / Ubuntu EC2</span>
+                </div>
+                <div class="card-desc">운영 중 메모리 누수 한계치 도달 시 PM2 데몬의 프로세스 재시작 및 무중단 복구 검증</div>
                 
-                <div class="visual-container">
-                    <div class="mermaid">
-                        graph LR
-                            classDef default fill:#0f0f0f,stroke:#333,color:#eaeaea;
-                            classDef redis fill:#1a0f05,stroke:#c5a059,color:#c5a059;
-
-                            A[미니게임 점수 발생] --> B{RDBMS 병목 차단}
-                            B -->|당일 활성 데이터| C[(Redis Sorted Set)]:::redis
-                            C -->|ZADD / ZREVRANK| D[실시간 순위 반환]
-                            
-                            subgraph Memory Management
-                                C -.-> E[Key Rotation with TTL]
-                            end
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="err" onclick="runLeak()">Inject: Memory Leak</button>
+                    </div>
+                    <div class="pm2-grid">
+                        <div class="pm2-box">
+                            <div style="color: var(--text-muted);">MEM Usage</div>
+                            <div class="pm2-val" id="pm2-mem" style="color: var(--color-ok);">42 MB</div>
+                            <div class="bar-wrap" style="height: 4px; margin: 0; background: #161b22;"><div class="bar" id="pm2-mbar" style="background: var(--color-ok); width: 15%;"></div></div>
+                        </div>
+                        <div class="pm2-box">
+                            <div style="color: var(--text-muted);">Status</div>
+                            <div class="pm2-val" id="pm2-stat" style="color: var(--color-ok);">online</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);" id="pm2-pid">PID: 14032</div>
+                        </div>
                     </div>
                 </div>
-                <div class="result-box">
-                    [System Log] Result: DB 부하 제거 및 동시 접속자 랭킹 조회 속도 극대화.
-                </div>
             </div>
+        </div>
 
-            <!-- Project 4 -->
-            <div class="card">
-                <h3>이기종 산업 인프라 연동 (해상물류 및 제조)</h3>
-                <p>다국적 파트너(이집트 등) 협업 및 외부 인터넷 접속이 제한되는 폐쇄망 환경의 정부과제 인프라를 설계했습니다. 이기종 장비 간 실시간 텔레메트리 데이터를 연동하기 위한 TCP/IP 통신 규격 및 DB 이중화 검토를 수행했습니다.</p>
-            </div>
-        </section>
-
-        <!-- Troubleshooting -->
-        <section class="fade-in delay-2">
-            <h2>Root Cause Analysis</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Incident Context</th>
-                        <th>Analysis & Resolution</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>DB Connection Pool Leak</td>
-                        <td>특정 로직 내 트랜잭션 미해제로 인한 활성 커넥션 누수 식별. Pool 반환 강제화 및 커넥션 타임아웃 튜닝을 통해 장애 격리 및 MTTR 단축.</td>
-                    </tr>
-                    <tr>
-                        <td>Concurrent Update Collision</td>
-                        <td>이벤트 보상 시 동시 다발적 API 호출로 동일 Row 데드락 발생. 비즈니스 로직 쿼리 순서 정렬 및 락(Pessimistic Lock) 스코프 최소화 적용.</td>
-                    </tr>
-                    <tr>
-                        <td>CI/CD Pipeline Breakdown</td>
-                        <td>Ubuntu 서버 환경에서 배포 프로세스 관리 및 SSH 인증 권한 충돌 이슈 디버깅. 무중단 서비스 유지를 위해 배포 쉘 스크립트 리팩토링.</td>
-                    </tr>
-                </tbody>
+        <h2>Technical Implementations</h2>
+        <div class="term-header" style="padding: 0; box-shadow: none;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-family: var(--font-sans); font-size: 0.95rem;">
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <th style="padding: 16px; color: var(--color-info); width: 25%;">VOTMS Streaming</th>
+                    <td style="padding: 16px; color: var(--text-muted);">REST API의 순차적 AI 오디오 처리 병목을 WebSocket + Smart VAD 기반 양방향 파이프라인으로 전환하여 지연시간 85% 단축.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <th style="padding: 16px; color: var(--color-info);">Legacy Refactoring</th>
+                    <td style="padding: 16px; color: var(--text-muted);">기존 Node.js 서비스 로직을 NestJS의 Controller-Service-DTO 계층으로 분리하여 객체지향적 구조로 무중단 마이그레이션.</td>
+                </tr>
+                <tr>
+                    <th style="padding: 16px; color: var(--color-info);">IoT / Closed Network</th>
+                    <td style="padding: 16px; color: var(--text-muted);">정부과제 해양물류/디지털트윈 환경에서 폐쇄망 제약 조건을 극복하고, 이기종 로봇 제어를 위한 TCP/IP 통신 구조 설계 및 DB 이중화 검토.</td>
+                </tr>
             </table>
-        </section>
-
-        <footer>
-            <p>Designed and Architected by Taeyeon Kim. &copy; 2026</p>
-        </footer>
+        </div>
     </div>
 
     <script>
-        // 고급스러운 다크/골드 테마로 Mermaid 초기화
-        mermaid.initialize({ 
-            startOnLoad: true, 
-            theme: 'base',
-            themeVariables: {
-                background: '#050505',
-                primaryColor: '#0f0f0f',
-                primaryBorderColor: '#333333',
-                primaryTextColor: '#eaeaea',
-                lineColor: '#666666',
-                secondaryColor: '#1a0f05',
-                tertiaryColor: '#1a0f05',
-                fontFamily: 'Pretendard, sans-serif'
-            },
-            sequence: {
-                actorMargin: 50,
-                messageMargin: 40
+        const getTimestamp = () => {
+            const d = new Date();
+            return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}.${d.getMilliseconds().toString().padStart(3,'0')}`;
+        };
+
+        const appendLog = (elementId, level, msg) => {
+            const screen = document.getElementById(elementId);
+            const line = document.createElement('div');
+            line.className = 'log-line';
+            let lvlClass = level === 'OK' ? 'l-ok' : level === 'ERR' ? 'l-err' : level === 'WARN' ? 'l-warn' : 'l-info';
+            line.innerHTML = `<span class="log-time">[${getTimestamp()}]</span> <span class="${lvlClass}">[${level}]</span> ${msg}`;
+            screen.appendChild(line);
+            screen.scrollTop = screen.scrollHeight;
+        };
+
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        // 1. Transaction Logic
+        async function runTx(isSuccess) {
+            const logId = 'log-tx';
+            document.getElementById(logId).innerHTML = '';
+            
+            appendLog(logId, 'INFO', 'QueryRunner initialized. Transaction started.');
+            await sleep(400);
+            appendLog(logId, 'OK', 'UPDATE mailbox SET status = "received"');
+            await sleep(500);
+
+            if(isSuccess) {
+                appendLog(logId, 'OK', 'INSERT INTO ownership (user_id, item_id)');
+                await sleep(500);
+                appendLog(logId, 'OK', 'UPDATE inventory SET count = count + 1');
+                await sleep(300);
+                appendLog(logId, 'OK', 'COMMIT executing...');
+                appendLog(logId, 'INFO', 'Transaction successful. Connection released.');
+            } else {
+                appendLog(logId, 'WARN', 'INSERT INTO ownership (user_id, item_id) - Processing...');
+                await sleep(800);
+                appendLog(logId, 'ERR', 'ER_LOCK_DEADLOCK: Deadlock found when trying to get lock');
+                await sleep(300);
+                appendLog(logId, 'WARN', 'ROLLBACK initiated...');
+                await sleep(400);
+                appendLog(logId, 'INFO', 'Data states reverted. Connection released.');
             }
-        });
+        }
+
+        // 2. Benchmark Logic
+        async function runBench() {
+            const logId = 'log-bench';
+            const rdbBar = document.getElementById('rdb-bar');
+            const redisBar = document.getElementById('redis-bar');
+            const rTime = document.getElementById('rdb-time');
+            const dTime = document.getElementById('redis-time');
+
+            document.getElementById(logId).innerHTML = '';
+            rdbBar.style.transition = 'none'; rdbBar.style.width = '0%';
+            redisBar.style.transition = 'none'; redisBar.style.width = '0%';
+            
+            appendLog(logId, 'INFO', 'Generating 10,000 requests...');
+            
+            // Redis (Fast)
+            setTimeout(() => {
+                redisBar.style.transition = 'width 0.1s ease-out';
+                redisBar.style.width = '100%';
+                dTime.innerText = '12ms';
+                appendLog(logId, 'OK', 'Redis ZADD completed in 12ms');
+            }, 100);
+
+            // RDBMS (Slow)
+            rdbBar.style.transition = 'width 4s cubic-bezier(0.1, 0.7, 1.0, 0.1)';
+            rdbBar.style.width = '100%';
+            
+            let time = 0;
+            const intv = setInterval(() => {
+                time += Math.floor(Math.random() * 150) + 50;
+                rTime.innerText = `${time}ms (DB Lock Wait)`;
+            }, 100);
+
+            await sleep(4000);
+            clearInterval(intv);
+            rTime.innerText = '4102ms';
+            appendLog(logId, 'WARN', 'RDBMS Thread pool exhausted. Finished in 4102ms');
+        }
+
+        // 3. PM2 Logic
+        async function runLeak() {
+            const mem = document.getElementById('pm2-mem');
+            const mBar = document.getElementById('pm2-mbar');
+            const stat = document.getElementById('pm2-stat');
+            const pid = document.getElementById('pm2-pid');
+
+            stat.innerText = 'online'; stat.style.color = 'var(--color-ok)';
+            mem.style.color = 'var(--color-warn)';
+            mBar.style.background = 'var(--color-warn)';
+            
+            for(let i=15; i<=95; i+=10) {
+                mBar.style.width = `${i}%`;
+                mem.innerText = `${Math.floor(i * 2.5)} MB`;
+                await sleep(300);
+            }
+
+            mBar.style.background = 'var(--color-err)';
+            mem.style.color = 'var(--color-err)';
+            stat.innerText = 'errored'; stat.style.color = 'var(--color-err)';
+            await sleep(1000);
+
+            // Restart
+            pid.innerText = `PID: ${Math.floor(Math.random() * 10000) + 10000}`;
+            mBar.style.transition = 'none';
+            mBar.style.width = '0%';
+            await sleep(100);
+            
+            mBar.style.transition = 'width 0.5s';
+            mBar.style.background = 'var(--color-ok)';
+            mem.style.color = 'var(--color-ok)';
+            stat.innerText = 'online'; stat.style.color = 'var(--color-ok)';
+            
+            mBar.style.width = '15%';
+            mem.innerText = '42 MB';
+        }
     </script>
 </body>
 </html>
