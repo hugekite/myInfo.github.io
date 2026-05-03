@@ -105,6 +105,19 @@
         .iot-path { flex-grow: 1; height: 2px; background: var(--border); position: relative; margin: 0 10px; }
         .iot-packet { position: absolute; width: 8px; height: 8px; background: var(--color-purple); border-radius: 50%; top: -3px; left: 0; opacity: 0; box-shadow: 0 0 8px var(--color-purple); }
         .iot-active { border-color: var(--color-purple); color: var(--color-purple); box-shadow: 0 0 10px rgba(188, 140, 255, 0.2); }
+        
+        /* Auth Flow Styles */
+        .auth-flow { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .auth-step { display: flex; flex-direction: column; background: #010409; border: 1px solid var(--border); padding: 12px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.8rem; opacity: 0.6; transition: all 0.3s; }
+        .auth-step.active { opacity: 1; border-color: var(--color-info); box-shadow: 0 0 10px rgba(88, 166, 255, 0.1); }
+        .auth-step.success { opacity: 1; border-color: var(--color-ok); color: var(--color-ok); background: rgba(63, 185, 80, 0.05); }
+        .auth-step.error { opacity: 1; border-color: var(--color-err); color: var(--color-err); background: rgba(248, 81, 73, 0.1); }
+        .auth-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .auth-detail { font-size: 0.75rem; color: var(--text-muted); border-top: 1px dashed #30363d; padding-top: 6px; margin-top: 4px; }
+        .token { padding: 2px 6px; border-radius: 3px; font-size: 0.7rem; border: 1px solid; display: inline-block; margin-right: 4px; }
+        .t-acc { border-color: var(--color-ok); color: var(--color-ok); }
+        .t-ref { border-color: var(--color-warn); color: var(--color-warn); }
+        .t-err { border-color: var(--color-err); color: var(--color-err); text-decoration: line-through; }
 
         /* Project Details */
         .proj-list { display: flex; flex-direction: column; gap: 16px; }
@@ -148,8 +161,8 @@
                 <p>&nbsp;&nbsp;<span class="json-key">"role"</span>: <span class="json-str">"Backend Engineer"</span>,</p>
                 <p>&nbsp;&nbsp;<span class="json-key">"career"</span>: <span class="json-str">"Rockwon IT Global (2024.09 ~ Present)"</span>,</p>
                 <p>&nbsp;&nbsp;<span class="json-key">"skills"</span>: <span class="json-arr">[</span><span class="json-str">"Node.js"</span>, <span class="json-str">"NestJS"</span>, <span class="json-str">"TypeScript"</span>, <span class="json-str">"MariaDB"</span>, <span class="json-str">"Redis"</span>, <span class="json-str">"AWS"</span><span class="json-arr">]</span>,</p>
-                <p>&nbsp;&nbsp;<span class="json-key">"focus"</span>: <span class="json-arr">[</span><span class="json-str">"Data Integrity"</span>, <span class="json-str">"Low Latency"</span>, <span class="json-str">"Fault Tolerance"</span><span class="json-arr">]</span>,</p>
-                <p>&nbsp;&nbsp;<span class="json-key">"summary"</span>: <span class="json-str">"단순한 기능 구현을 넘어, 운영 환경의 실패를 상정하고 이를 방어하는 아키텍처 설계에 강점이 있습니다. 메타버스 재화 처리, 실시간 스트리밍 파이프라인, 폐쇄망 인프라 구축을 주도했습니다."</span></p>
+                <p>&nbsp;&nbsp;<span class="json-key">"focus"</span>: <span class="json-arr">[</span><span class="json-str">"Data Integrity"</span>, <span class="json-str">"Low Latency"</span>, <span class="json-str">"Zero-Trust Security"</span><span class="json-arr">]</span>,</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"summary"</span>: <span class="json-str">"단순한 API 구현을 넘어, 운영 환경의 실패와 보안 위협을 상정하고 방어하는 아키텍처 설계에 강점이 있습니다. 메타버스 재화 처리 로직 설계 및 토큰 탈취 방어 인증 파이프라인 구축을 주도했습니다."</span></p>
                 <p>}</p>
                 <div class="contact-bar">
                     <a href="mailto:ktyeon92@gmail.com">ktyeon92@gmail.com</a>
@@ -235,28 +248,32 @@
                 </div>
             </div>
 
-            <!-- Widget 4: PM2 Auto Healing -->
+            <!-- Widget 4: JWT Security Architecture (UPDATED) -->
             <div class="card">
                 <div class="card-header">
-                    <span class="card-title">Infra Auto-Healing</span>
-                    <span class="badge">PM2 / Ubuntu</span>
+                    <span class="card-title">Zero-Trust Auth Security</span>
+                    <span class="badge">JWT / RTR</span>
                 </div>
-                <div class="card-desc">AWS EC2 운영 중 로직 결함으로 메모리 누수 도달 시 PM2 데몬에 의한 무중단 서비스 자동 복구 시뮬레이션</div>
+                <div class="card-desc">XSS 방어를 위한 HttpOnly Cookie 전략 및 Refresh Token Rotation(RTR)을 통한 토큰 탈취/재사용 방어 로직.</div>
                 
                 <div class="widget">
                     <div class="widget-controls">
-                        <button data-type="err" onclick="runLeak()">Inject: Memory Leak</button>
+                        <button data-type="ok" onclick="runAuth('xss')">HttpOnly Auth</button>
+                        <button data-type="warn" onclick="runAuth('rtr')">RTR (Silent Refresh)</button>
+                        <button data-type="err" onclick="runAuth('steal')">Simulate Token Theft</button>
                     </div>
-                    <div class="pm2-grid">
-                        <div class="pm2-box">
-                            <div style="color: var(--text-muted); font-size:0.8rem;">MEM Usage</div>
-                            <div class="pm2-val" id="pm2-mem" style="color: var(--color-ok);">42 MB</div>
-                            <div class="bar-wrap" style="height: 4px; margin: 0; background: #161b22;"><div class="bar" id="pm2-mbar" style="background: var(--color-ok); width: 15%;"></div></div>
+                    <div class="auth-flow">
+                        <div class="auth-step" id="auth-1">
+                            <div class="auth-header"><span id="ah-1">1. Client Request</span> <div id="tb-1"></div></div>
+                            <div class="auth-detail" id="ad-1">Waiting for action...</div>
                         </div>
-                        <div class="pm2-box">
-                            <div style="color: var(--text-muted); font-size:0.8rem;">Process Status</div>
-                            <div class="pm2-val" id="pm2-stat" style="color: var(--color-ok);">online</div>
-                            <div style="font-size: 0.75rem; color: var(--text-muted);" id="pm2-pid">PID: 14032</div>
+                        <div class="auth-step" id="auth-2">
+                            <div class="auth-header"><span id="ah-2">2. Server Validation</span></div>
+                            <div class="auth-detail" id="ad-2">Validating Payload & Signatures</div>
+                        </div>
+                        <div class="auth-step" id="auth-3">
+                            <div class="auth-header"><span id="ah-3">3. Server Response</span> <div id="tb-3"></div></div>
+                            <div class="auth-detail" id="ad-3">Executing Auth Strategy</div>
                         </div>
                     </div>
                 </div>
@@ -350,7 +367,7 @@
                 </div>
                 <div class="f-body">
                     <div class="f-key">Security & Auth</div>
-                    <div class="f-val">JWT 기반 로그인 로직, Access/Refresh Token 발급/검증 체계 구축. 토큰 만료 및 서명 불일치 방어 로직 적용.</div>
+                    <div class="f-val">토큰 기반(JWT) 인증 서버 구축. LocalStorage의 XSS 취약점을 방지하기 위해 HttpOnly Cookie로 토큰을 발급하고, RTR(Refresh Token Rotation) 기법을 적용하여 탈취된 토큰의 재사용 방어.</div>
                     
                     <div class="f-key">External Services</div>
                     <div class="f-val">PayPal 결제 승인 API 연동 및 결제 이력 트랜잭션 처리. AWS S3를 활용한 영상/썸네일 미디어 파일 처리 파이프라인 구축.</div>
@@ -507,44 +524,69 @@
             rTime.innerText = '4102ms (Bottleneck)';
         }
 
-        // 4. PM2 Logic
-        async function runLeak() {
-            const mem = document.getElementById('pm2-mem');
-            const mBar = document.getElementById('pm2-mbar');
-            const stat = document.getElementById('pm2-stat');
-            const pid = document.getElementById('pm2-pid');
+        // 4. Advanced JWT Auth Logic (Security Focused)
+        async function runAuth(scenario) {
+            const s1 = document.getElementById('auth-1'), ah1 = document.getElementById('ah-1'), ad1 = document.getElementById('ad-1'), tb1 = document.getElementById('tb-1');
+            const s2 = document.getElementById('auth-2'), ah2 = document.getElementById('ah-2'), ad2 = document.getElementById('ad-2');
+            const s3 = document.getElementById('auth-3'), ah3 = document.getElementById('ah-3'), ad3 = document.getElementById('ad-3'), tb3 = document.getElementById('tb-3');
 
-            stat.innerText = 'online'; stat.style.color = 'var(--color-ok)';
-            mem.style.color = 'var(--color-warn)';
-            mBar.style.background = 'var(--color-warn)';
-            
-            for(let i=15; i<=95; i+=15) {
-                mBar.style.width = `${i}%`;
-                mem.innerText = `${Math.floor(i * 2.5)} MB`;
-                await sleep(300);
+            // Reset States
+            [s1, s2, s3].forEach(el => el.className = 'auth-step');
+            tb1.innerHTML = ''; tb3.innerHTML = '';
+            ah2.innerText = '2. Server Validation'; ad2.innerText = 'Validating Payload & Signatures';
+
+            if (scenario === 'xss') {
+                s1.classList.add('active');
+                ah1.innerText = '1. POST /auth/login';
+                ad1.innerText = 'Client sends secure credentials.';
+                await sleep(600);
+                
+                s2.classList.add('active');
+                ah2.innerText = '2. Generate JWTs & Set Cookies';
+                ad2.innerText = 'Server issues Access/Refresh tokens with HttpOnly & Secure flags to prevent XSS (JavaScript read access denied).';
+                await sleep(1000);
+
+                s3.classList.add('success');
+                ah3.innerText = '3. 200 OK (Set-Cookie Headers)';
+                ad3.innerText = 'Tokens stored securely in browser cookie jar, safe from malicious scripts.';
+                tb3.innerHTML = '<span class="token t-acc">Access(HttpOnly)</span><span class="token t-ref">Refresh(HttpOnly)</span>';
+            } 
+            else if (scenario === 'rtr') {
+                s1.classList.add('active');
+                ah1.innerText = '1. GET /api/user (Silent Refresh)';
+                ad1.innerText = 'Access Token expired. Client automatically sends Refresh Token via Cookie.';
+                tb1.innerHTML = '<span class="token t-err">Access(Expired)</span><span class="token t-ref">Refresh_v1</span>';
+                await sleep(800);
+                
+                s2.classList.add('active');
+                ah2.innerText = '2. Refresh Token Rotation (RTR) Logic';
+                ad2.innerText = 'Server validates Refresh_v1, generates NEW Access and NEW Refresh_v2. Old Refresh_v1 is marked invalid in DB.';
+                await sleep(1200);
+
+                s3.classList.add('success');
+                ah3.innerText = '3. 200 OK (Tokens Rotated)';
+                ad3.innerText = 'New token pair issued. Continuous secure session maintained.';
+                tb3.innerHTML = '<span class="token t-acc">New_Access</span><span class="token t-ref">Refresh_v2</span>';
             }
+            else if (scenario === 'steal') {
+                s1.classList.add('active');
+                ah1.innerText = '1. Attacker Action';
+                ad1.innerText = 'Attacker somehow steals and attempts to use the previously used Refresh_v1.';
+                tb1.innerHTML = '<span class="token t-err">Stolen Refresh_v1</span>';
+                await sleep(800);
+                
+                s2.classList.add('error');
+                ah2.innerText = '2. Threat Detection (Token Reuse Family)';
+                ad2.innerText = 'Server detects Refresh_v1 was already used! Assuming session compromise. Revoking entire Token Chain (v1, v2...).';
+                await sleep(1200);
 
-            mBar.style.background = 'var(--color-err)';
-            mem.style.color = 'var(--color-err)';
-            stat.innerText = 'errored'; stat.style.color = 'var(--color-err)';
-            await sleep(800);
-
-            // Restart
-            pid.innerText = `PID: ${Math.floor(Math.random() * 10000) + 10000}`;
-            mBar.style.transition = 'none';
-            mBar.style.width = '0%';
-            await sleep(100);
-            
-            mBar.style.transition = 'width 0.5s';
-            mBar.style.background = 'var(--color-ok)';
-            mem.style.color = 'var(--color-ok)';
-            stat.innerText = 'online'; stat.style.color = 'var(--color-ok)';
-            
-            mBar.style.width = '15%';
-            mem.innerText = '42 MB';
+                s3.classList.add('error');
+                ah3.innerText = '3. 401 Unauthorized';
+                ad3.innerText = 'Attack blocked. Legitimate user will be forced to re-login, securing the account.';
+            }
         }
 
-        // 5. Gacha (Probability) Logic
+        // 5. Gacha Logic
         async function runGacha() {
             const box = document.getElementById('g-box-1');
             const logId = 'log-gacha';
