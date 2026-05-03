@@ -42,11 +42,11 @@
         .contact-bar a { color: var(--color-info); text-decoration: none; font-family: var(--font-mono); font-size: 0.9rem; }
         .contact-bar a:hover { text-decoration: underline; }
 
-        h2 { font-size: 1.4rem; font-weight: 600; margin: 40px 0 20px 0; color: #fff; border-left: 4px solid var(--color-info); padding-left: 12px; }
+        h2 { font-size: 1.4rem; font-weight: 600; margin: 30px 0 20px 0; color: #fff; border-left: 4px solid var(--color-info); padding-left: 12px; }
 
         /* Grid Layout */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
-        .grid-1 { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; }
+        .grid-1 { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
         @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
         /* Dashboard Cards */
@@ -64,6 +64,7 @@
         button[data-type="err"]:hover { border-color: var(--color-err); color: var(--color-err); }
         button[data-type="ok"]:hover { border-color: var(--color-ok); color: var(--color-ok); }
         button[data-type="warn"]:hover { border-color: var(--color-warn); color: var(--color-warn); }
+        button[data-type="info"]:hover { border-color: var(--color-purple); color: var(--color-purple); }
 
         /* Log Outputs */
         .log-screen { flex-grow: 1; background: #010409; border: 1px solid var(--border); padding: 12px; border-radius: 4px; overflow-y: auto; height: 160px; display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; }
@@ -92,7 +93,30 @@
         .pm2-box { border: 1px solid var(--border); background: #010409; padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 4px; }
         .pm2-val { font-size: 1.4rem; font-weight: 500; margin: 4px 0; }
 
-        /* Feature Matrix (New Detailed Lists) */
+        /* Gacha Box Styles */
+        .gacha-box { width: 100%; height: 50px; background: #010409; border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; font-family: var(--font-mono); transition: all 0.2s; color: var(--text-muted); }
+        .g-common { color: #8b949e; border-color: #30363d; background: #161b22; }
+        .g-rare { color: var(--color-info); border-color: var(--color-info); background: rgba(88, 166, 255, 0.1); box-shadow: 0 0 10px rgba(88, 166, 255, 0.2); }
+        .g-legend { color: var(--color-warn); border-color: var(--color-warn); background: rgba(210, 153, 34, 0.1); box-shadow: 0 0 15px rgba(210, 153, 34, 0.4); }
+
+        /* IoT Network Styles */
+        .iot-network { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+        .iot-node { background: #161b22; border: 1px solid var(--border); padding: 10px 12px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.8rem; z-index: 2; text-align: center; width: 30%; transition: 0.2s; }
+        .iot-path { flex-grow: 1; height: 2px; background: var(--border); position: relative; margin: 0 10px; }
+        .iot-packet { position: absolute; width: 8px; height: 8px; background: var(--color-purple); border-radius: 50%; top: -3px; left: 0; opacity: 0; box-shadow: 0 0 8px var(--color-purple); }
+        .iot-active { border-color: var(--color-purple); color: var(--color-purple); box-shadow: 0 0 10px rgba(188, 140, 255, 0.2); }
+
+        /* Project Details */
+        .proj-list { display: flex; flex-direction: column; gap: 16px; }
+        .proj-item { background: var(--bg-term); border: 1px solid var(--border); padding: 20px; border-radius: 6px; }
+        .proj-header { display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+        .proj-name { font-weight: 600; color: #fff; font-size: 1.1rem; }
+        .proj-role { color: var(--color-purple); font-family: var(--font-mono); font-size: 0.85rem; }
+        .proj-body ul { list-style: none; margin-left: 0; }
+        .proj-body li { position: relative; padding-left: 16px; margin-bottom: 8px; font-size: 0.95rem; color: var(--text-base); }
+        .proj-body li::before { content: '>'; position: absolute; left: 0; color: var(--color-info); font-family: var(--font-mono); font-weight: bold; }
+        
+        /* Feature Matrix */
         .feature-box { background: var(--bg-term); border: 1px solid var(--border); padding: 20px; border-radius: 6px; margin-bottom: 16px; }
         .f-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 12px; }
         .f-icon { color: var(--color-info); font-family: var(--font-mono); font-weight: bold; font-size: 1.2rem; }
@@ -235,6 +259,52 @@
                             <div style="font-size: 0.75rem; color: var(--text-muted);" id="pm2-pid">PID: 14032</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <!-- Widget 5: Server-side Probability Gacha -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Server-side Probability Engine</span>
+                    <span class="badge">Node.js / RNG</span>
+                </div>
+                <div class="card-desc">이벤트 및 확률형 가챠 시스템. 클라이언트 조작 방지를 위해 서버 사이드에서 유저 상태 검증 및 안전한 난수 생성 처리.</div>
+                
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="warn" onclick="runGacha()">Request Pull (Execute)</button>
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <div id="g-box-1" class="gacha-box">?</div>
+                    </div>
+                    <div class="log-screen" id="log-gacha" style="height: 80px;">
+                        <div class="log-line"><span class="log-time">[System]</span> Awaiting roll request...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget 6: IoT TCP/IP Closed Network -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">IoT TCP/IP Telemetry</span>
+                    <span class="badge">TCP Socket / Closed Net</span>
+                </div>
+                <div class="card-desc">정부과제 폐쇄망 환경에서 이기종 제조 로봇(C#)과 서버(Node.js) 간의 실시간 텔레메트리 통신 및 데이터 매핑 시뮬레이션.</div>
+                
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="info" onclick="runIoT()">Send Telemetry Data</button>
+                    </div>
+                    <div class="iot-network">
+                        <div class="iot-node" id="iot-csharp">C# App</div>
+                        <div class="iot-path"><div class="iot-packet" id="pkt-1"></div></div>
+                        <div class="iot-node" id="iot-node">Node.js</div>
+                        <div class="iot-path"><div class="iot-packet" id="pkt-2"></div></div>
+                        <div class="iot-node" id="iot-robot">Robot</div>
+                    </div>
+                    <div style="margin-top: 15px; font-size: 0.8rem; color: var(--color-purple);" id="iot-status">Status: Idle</div>
                 </div>
             </div>
         </div>
@@ -472,6 +542,83 @@
             
             mBar.style.width = '15%';
             mem.innerText = '42 MB';
+        }
+
+        // 5. Gacha (Probability) Logic
+        async function runGacha() {
+            const box = document.getElementById('g-box-1');
+            const logId = 'log-gacha';
+            document.getElementById(logId).innerHTML = '';
+            
+            appendLog(logId, 'INFO', 'Validating user session and constraints...');
+            await sleep(300);
+            appendLog(logId, 'INFO', 'Executing secure RNG generator...');
+            
+            box.className = 'gacha-box';
+            let rollTime = 0;
+            const rollIntv = setInterval(() => {
+                const colors = ['#8b949e', '#58a6ff', '#d29922'];
+                box.style.color = colors[rollTime % 3];
+                box.innerText = Math.random().toString(36).substring(2, 8).toUpperCase();
+                rollTime++;
+            }, 50);
+
+            await sleep(1500);
+            clearInterval(rollIntv);
+            
+            const rand = Math.random();
+            if (rand < 0.7) {
+                box.className = 'gacha-box g-common';
+                box.innerText = 'COMMON ITEM';
+                appendLog(logId, 'OK', 'Result: COMMON (70% probability)');
+            } else if (rand < 0.95) {
+                box.className = 'gacha-box g-rare';
+                box.innerText = 'RARE ITEM';
+                appendLog(logId, 'OK', 'Result: RARE (25% probability)');
+            } else {
+                box.className = 'gacha-box g-legend';
+                box.innerText = 'LEGENDARY ITEM';
+                appendLog(logId, 'WARN', 'Result: LEGENDARY (5% probability) - Broadcast triggered');
+            }
+        }
+
+        // 6. IoT Telemetry Logic
+        async function runIoT() {
+            const p1 = document.getElementById('pkt-1');
+            const p2 = document.getElementById('pkt-2');
+            const n1 = document.getElementById('iot-csharp');
+            const n2 = document.getElementById('iot-node');
+            const n3 = document.getElementById('iot-robot');
+            const status = document.getElementById('iot-status');
+
+            n1.classList.remove('iot-active'); n2.classList.remove('iot-active'); n3.classList.remove('iot-active');
+            p1.style.opacity = 0; p2.style.opacity = 0;
+            
+            status.innerText = "Status: C# Control App preparing telemetry payload...";
+            n1.classList.add('iot-active');
+            await sleep(600);
+
+            status.innerText = "Status: Transmitting via Closed Network TCP...";
+            p1.animate([{ left: '0', opacity: 1 }, { left: '100%', opacity: 1 }], { duration: 600, fill: 'forwards' });
+            await sleep(600);
+            
+            n1.classList.remove('iot-active');
+            n2.classList.add('iot-active');
+            p1.style.opacity = 0;
+            status.innerText = "Status: Node.js parsing binary buffer & mapping data...";
+            await sleep(800);
+
+            status.innerText = "Status: Sending mapped commands to Robot Controller...";
+            p2.animate([{ left: '0', opacity: 1 }, { left: '100%', opacity: 1 }], { duration: 600, fill: 'forwards' });
+            await sleep(600);
+
+            n2.classList.remove('iot-active');
+            n3.classList.add('iot-active');
+            p2.style.opacity = 0;
+            status.innerText = "Status: Robot ACK received. Synchronization complete.";
+            await sleep(1200);
+            n3.classList.remove('iot-active');
+            status.innerText = "Status: Idle";
         }
     </script>
 </body>
