@@ -147,6 +147,11 @@
         .c-msg { color: var(--text-base); }
         .c-tag { color: var(--color-ok); margin-right: 8px; border: 1px solid var(--color-ok); padding: 0 4px; border-radius: 3px; font-size: 0.75rem; }
         .c-err { color: var(--color-err); margin-right: 8px; border: 1px solid var(--color-err); padding: 0 4px; border-radius: 3px; font-size: 0.75rem; }
+
+        /* Indicator dots */
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; margin: 4px auto 0; transition: background-color 0.3s; }
+        .dot-ok { background-color: var(--color-ok); box-shadow: 0 0 8px var(--color-ok); }
+        .dot-err { background-color: var(--color-err); box-shadow: 0 0 8px var(--color-err); }
     </style>
 </head>
 <body>
@@ -160,7 +165,7 @@
                 <p>&nbsp;&nbsp;<span class="json-key">"name"</span>: <span class="json-str">"김태연"</span>,</p>
                 <p>&nbsp;&nbsp;<span class="json-key">"role"</span>: <span class="json-str">"Backend Engineer"</span>,</p>
                 <p>&nbsp;&nbsp;<span class="json-key">"career"</span>: <span class="json-str">"Rockwon IT Global (2024.09 ~ Present)"</span>,</p>
-                <p>&nbsp;&nbsp;<span class="json-key">"skills"</span>: <span class="json-arr">[</span><span class="json-str">"Node.js"</span>, <span class="json-str">"NestJS"</span>, <span class="json-str">"TypeScript"</span>, <span class="json-str">"MariaDB"</span>, <span class="json-str">"Redis"</span>, <span class="json-str">"AWS"</span><span class="json-arr">]</span>,</p>
+                <p>&nbsp;&nbsp;<span class="json-key">"skills"</span>: <span class="json-arr">[</span><span class="json-str">"NestJS (OOP/DI)"</span>, <span class="json-str">"TypeScript"</span>, <span class="json-str">"RDBMS"</span>, <span class="json-str">"Redis"</span>, <span class="json-str">"Java/Spring (Adapting)"</span><span class="json-arr">]</span>,</p>
                 <p>&nbsp;&nbsp;<span class="json-key">"focus"</span>: <span class="json-arr">[</span><span class="json-str">"Data Integrity"</span>, <span class="json-str">"Low Latency"</span>, <span class="json-str">"Zero-Trust Security"</span><span class="json-arr">]</span>,</p>
                 <p>&nbsp;&nbsp;<span class="json-key">"summary"</span>: <span class="json-str">"단순한 API 구현을 넘어, 운영 환경의 실패와 보안 위협을 상정하고 방어하는 아키텍처 설계에 강점이 있습니다. 메타버스 재화 처리 로직 설계 및 토큰 탈취 방어 인증 파이프라인 구축을 주도했습니다."</span></p>
                 <p>}</p>
@@ -248,7 +253,7 @@
                 </div>
             </div>
 
-            <!-- Widget 4: JWT Security Architecture (UPDATED) -->
+            <!-- Widget 4: JWT Security Architecture -->
             <div class="card">
                 <div class="card-header">
                     <span class="card-title">Zero-Trust Auth Security</span>
@@ -322,6 +327,65 @@
                         <div class="iot-node" id="iot-robot">Robot</div>
                     </div>
                     <div style="margin-top: 15px; font-size: 0.8rem; color: var(--color-purple);" id="iot-status">Status: Idle</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <!-- Widget 7: Message Queue / Async Processing -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Async Event Queue</span>
+                    <span class="badge">Kafka / Pub-Sub</span>
+                </div>
+                <div class="card-desc">대규모 결제/보상 트래픽 폭주 시 DB 커넥션 고갈을 막기 위한 Message Queue 기반 비동기 처리 및 Dead Letter Queue(DLQ) 방어.</div>
+                
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="info" onclick="runQueue(10)">Spike: 10 Requests</button>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Message Broker (Queue Depth: <span id="q-depth">0</span>)</div>
+                        <div style="display: flex; gap: 4px; height: 24px; background: #010409; border: 1px solid var(--border); padding: 4px; border-radius: 4px; overflow: hidden;" id="mq-bar">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 12px;">
+                            <div style="font-size: 0.8rem;">[WORKER] DB 상태: <span id="w-status" style="color: var(--text-muted);">Idle</span></div>
+                            <div style="font-size: 0.8rem;">[DLQ] 실패 건수: <span id="dlq-count" style="color: var(--color-err);">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget 8: Circuit Breaker -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Fault Tolerance (Circuit Breaker)</span>
+                    <span class="badge">MSA / Resilience</span>
+                </div>
+                <div class="card-desc">외부 결제망(PayPal 등) 장애 시 타임아웃으로 인한 내부 서버 스레드 고갈을 막고, Fail-fast 응답을 반환하는 서킷 브레이커 패턴.</div>
+                
+                <div class="widget">
+                    <div class="widget-controls">
+                        <button data-type="ok" onclick="runCircuit('normal')">Normal API</button>
+                        <button data-type="err" onclick="runCircuit('fail')">PG Server Down</button>
+                    </div>
+                    <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #010409; border: 1px solid var(--border); border-radius: 4px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">Our Server</div>
+                            <div id="cb-internal" class="status-dot dot-ok"></div>
+                        </div>
+                        
+                        <div style="flex-grow: 1; text-align: center; font-family: var(--font-mono); font-size: 0.8rem;">
+                            <div id="cb-state" style="color: var(--color-ok); border: 1px solid var(--color-ok); padding: 2px 8px; border-radius: 12px; display: inline-block;">Circuit: CLOSED</div>
+                            <div id="cb-flow" style="margin-top: 4px; color: var(--text-muted);">--- req ---></div>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">External PG</div>
+                            <div id="cb-external" class="status-dot dot-ok"></div>
+                        </div>
+                    </div>
+                    <div id="cb-log" style="font-size: 0.8rem; margin-top: 8px; color: var(--text-muted); min-height: 20px;">Waiting for request...</div>
                 </div>
             </div>
         </div>
@@ -459,12 +523,10 @@
             const tRest = document.getElementById('rest-time');
             const tWs = document.getElementById('ws-time');
 
-            // clear old packets
             trRest.querySelectorAll('.packet').forEach(e => e.remove());
             trWs.querySelectorAll('.packet').forEach(e => e.remove());
             tRest.innerText = "Processing..."; tWs.innerText = "Streaming...";
 
-            // REST Animation (Slow chunk)
             const pRest = document.createElement('div');
             pRest.className = 'packet rest';
             pRest.style.width = '20px'; pRest.style.height = '20px';
@@ -474,7 +536,6 @@
             
             setTimeout(() => { tRest.innerText = '8.5s (High Latency)'; tRest.style.color = 'var(--color-err)'; }, 3500);
 
-            // WebSocket Animation (Fast chunks)
             let wsTime = 0;
             const wsIntv = setInterval(() => {
                 wsTime += 0.2;
@@ -502,14 +563,12 @@
             rdbBar.style.transition = 'none'; rdbBar.style.width = '0%';
             redisBar.style.transition = 'none'; redisBar.style.width = '0%';
             
-            // Redis (Fast)
             setTimeout(() => {
                 redisBar.style.transition = 'width 0.1s ease-out';
                 redisBar.style.width = '100%';
                 dTime.innerText = '12ms';
             }, 100);
 
-            // RDBMS (Slow)
             rdbBar.style.transition = 'width 3s cubic-bezier(0.1, 0.7, 1.0, 0.1)';
             rdbBar.style.width = '100%';
             
@@ -524,13 +583,12 @@
             rTime.innerText = '4102ms (Bottleneck)';
         }
 
-        // 4. Advanced JWT Auth Logic (Security Focused)
+        // 4. Advanced JWT Auth Logic
         async function runAuth(scenario) {
             const s1 = document.getElementById('auth-1'), ah1 = document.getElementById('ah-1'), ad1 = document.getElementById('ad-1'), tb1 = document.getElementById('tb-1');
             const s2 = document.getElementById('auth-2'), ah2 = document.getElementById('ah-2'), ad2 = document.getElementById('ad-2');
             const s3 = document.getElementById('auth-3'), ah3 = document.getElementById('ah-3'), ad3 = document.getElementById('ad-3'), tb3 = document.getElementById('tb-3');
 
-            // Reset States
             [s1, s2, s3].forEach(el => el.className = 'auth-step');
             tb1.innerHTML = ''; tb3.innerHTML = '';
             ah2.innerText = '2. Server Validation'; ad2.innerText = 'Validating Payload & Signatures';
@@ -661,6 +719,91 @@
             await sleep(1200);
             n3.classList.remove('iot-active');
             status.innerText = "Status: Idle";
+        }
+
+        // 7. Message Queue Logic
+        async function runQueue(count) {
+            const mqBar = document.getElementById('mq-bar');
+            const qDepth = document.getElementById('q-depth');
+            const wStatus = document.getElementById('w-status');
+            const dlqCount = document.getElementById('dlq-count');
+            
+            for(let i=0; i<count; i++) {
+                const item = document.createElement('div');
+                item.style = 'width: 12px; height: 100%; background: var(--color-info); border-radius: 2px;';
+                mqBar.appendChild(item);
+                qDepth.innerText = mqBar.children.length;
+                await sleep(50);
+            }
+
+            wStatus.innerText = 'Processing...';
+            wStatus.style.color = 'var(--color-warn)';
+            
+            while(mqBar.children.length > 0) {
+                await sleep(400);
+                mqBar.removeChild(mqBar.firstChild);
+                qDepth.innerText = mqBar.children.length;
+                
+                if(Math.random() < 0.1) {
+                    let currentDlq = parseInt(dlqCount.innerText);
+                    dlqCount.innerText = currentDlq + 1;
+                }
+            }
+            wStatus.innerText = 'Idle';
+            wStatus.style.color = 'var(--text-muted)';
+        }
+
+        // 8. Circuit Breaker Logic
+        let failureCount = 0;
+        let circuitOpen = false;
+
+        async function runCircuit(type) {
+            const stateUI = document.getElementById('cb-state');
+            const flowUI = document.getElementById('cb-flow');
+            const extUI = document.getElementById('cb-external');
+            const logUI = document.getElementById('cb-log');
+
+            if (circuitOpen) {
+                logUI.innerHTML = '<span style="color: var(--color-err);">[Fail-Fast] Circuit is OPEN. Request blocked immediately to protect internal threads.</span>';
+                flowUI.innerHTML = '<span style="color: var(--color-err);">-- X -- blocked</span>';
+                
+                setTimeout(() => {
+                    circuitOpen = false;
+                    failureCount = 0;
+                    stateUI.innerText = 'Circuit: CLOSED';
+                    stateUI.style.color = 'var(--color-ok)';
+                    stateUI.style.borderColor = 'var(--color-ok)';
+                    extUI.className = 'status-dot dot-ok';
+                    logUI.innerHTML = '<span style="color: var(--color-info);">[Recovery] Circuit reset to CLOSED.</span>';
+                }, 5000);
+                return;
+            }
+
+            flowUI.innerHTML = '--- req --->';
+            
+            if (type === 'normal') {
+                extUI.className = 'status-dot dot-ok';
+                logUI.innerHTML = 'Sending request to PG...';
+                await sleep(500);
+                flowUI.innerHTML = '<-- 200 OK ---';
+                logUI.innerHTML = '<span style="color: var(--color-ok);">[Success] Payment processed.</span>';
+                failureCount = 0;
+            } else {
+                extUI.className = 'status-dot dot-err';
+                logUI.innerHTML = 'Sending request... Waiting for PG response...';
+                await sleep(1500);
+                flowUI.innerHTML = '<-- 504 Timeout ---';
+                logUI.innerHTML = '<span style="color: var(--color-warn);">[Timeout] PG Server unresponsive.</span>';
+                failureCount++;
+
+                if (failureCount >= 2) {
+                    circuitOpen = true;
+                    stateUI.innerText = 'Circuit: OPEN';
+                    stateUI.style.color = 'var(--color-err)';
+                    stateUI.style.borderColor = 'var(--color-err)';
+                    logUI.innerHTML = '<span style="color: var(--color-err);">[Trip] Failure threshold reached! Circuit OPENED.</span>';
+                }
+            }
         }
     </script>
 </body>
